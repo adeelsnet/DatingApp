@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Dating App</a>
+
+        <!-- <ul class="navbar-nav mr-auto" *ngIf="loggedIn"> 
+            <ul class="navbar-nav mr-auto" *ngIf="currentUser$ | async">-->
+        <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Matches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Lists</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Messages</a>
+            </li>
+        </ul>
+
+        <!-- dropdown, dropdownToggle, and *dropdownMenu are from ngx Bootstrap see its documentation
+            https://valor-software.com/ngx-bootstrap/#/dropdowns-->
+
+        <!-- <div class="dropdown" dropdown *ngIf="loggedIn"> 
+            <div class="dropdown" dropdown *ngIf="currentUser$ | async">-->
+        <div class="dropdown" dropdown *ngIf="accountService.currentUser$ | async">
+            <a class="dropdown-toggle text-light" dropdownToggle>Welcome User</a> <span class="caret"></span>
+            <ul class="dropdown-menu" *dropdownMenu>
+                <li><a class="dropdown-item">Edit Profile</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li><a class="dropdown-item" (click)="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!-- <form *ngIf="loggedIn" #loginForm='ngForm' (ngSubmit)='login()'  with currentUser$ | async we cannot use '!' sign 
+            <form *ngIf="(currentUser$ | async) === null" #loginForm='ngForm' (ngSubmit)='login()'-->
+        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm='ngForm' (ngSubmit)='login()'
+            class=" form-inline mt-2 mt-md-0 " autocomplete="off">
+            <input name="userName" [(ngModel)]="model.userName" class="form-control mr-sm-2 " type="text "
+                placeholder="Username ">
+            <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2 " type="password"
+                placeholder="Password">
+            <button class="btn btn-outline-success my-2 my-sm-0 " type="submit ">Login</button>
+        </form>
+        <!-- </div> -->
+    </div>
+</nav>
