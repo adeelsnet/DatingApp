@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
@@ -16,7 +18,9 @@ export class NavComponent implements OnInit {
   // loggedIn: boolean;
   //currentUser$: Observable<User>; // instead of using getCurrentUser() we use this and ASYNC pipe in template
 
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // this.getCurrentUser();
@@ -25,16 +29,20 @@ export class NavComponent implements OnInit {
 
   login(){
     this.accountService.login(this.model).subscribe(response => {
-      console.log(response);
+      // console.log(response);
+      this.router.navigateByUrl('/members');
+      // this.toastr.success(response.userName + ' Successfully Loggedin!');
       // this.loggedIn = true;
     }, error => {
       console.log(error);
+      this.toastr.error(error.error);
     });
   }
 
   logout(){
     this.accountService.logout();
     // this.loggedIn = false;
+    this.router.navigateByUrl('/');
   }
 
 /*  getCurrentUser(){
