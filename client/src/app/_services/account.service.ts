@@ -9,23 +9,23 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
-baseUrl = 'https://localhost:5001/api/';
+  baseUrl = 'https://localhost:5001/api/';
 
-// currentUserSource is special type of Observable, ReplaySubject<>() keeps the values in specified nummber of buffer as mentioned
-// below it's (1) whoever subscribe to it will get the last or many values inside it
-private currentUserSource = new ReplaySubject<User>(1);
+  // currentUserSource is special type of Observable, ReplaySubject<>() keeps the values in specified nummber of buffer as mentioned
+  // below it's (1) whoever subscribe to it will get the last or many values inside it
+  private currentUserSource = new ReplaySubject<User>(1);
 
-// $ sign at the end shows the naming convention of an Observable
-currentUser$ = this.currentUserSource.asObservable();
+  // $ sign at the end shows the naming convention of an Observable
+  currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  login(model: any){
+  login(model: any) {
     // return this.http.post(`${this.baseUrl}account/login`, model);
     return this.http.post(`${this.baseUrl}account/login`, model).pipe(
       map((response: User) => {
         const user = response;
-        if (user){
+        if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
@@ -34,10 +34,10 @@ currentUser$ = this.currentUserSource.asObservable();
     );
   }
 
-  register(model: any){
+  register(model: any) {
     return this.http.post(`${this.baseUrl}account/register`, model).pipe(
       map((user: User) => {
-        if (user){
+        if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
@@ -45,11 +45,11 @@ currentUser$ = this.currentUserSource.asObservable();
     );
   }
 
-  setCurrentUser(user: User){
+  setCurrentUser(user: User) {
     this.currentUserSource.next(user);
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }

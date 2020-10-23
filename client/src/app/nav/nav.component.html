@@ -18,9 +18,12 @@
                     <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Lists</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='messages' routerLinkActive='active'>Messages</a>
+                    <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Messages</a>
                 </li>
             </ng-container>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/error' routerLinkActive='active'>Errors</a>
+            </li>
         </ul>
 
         <!-- dropdown, dropdownToggle, and *dropdownMenu are from ngx Bootstrap see its documentation
@@ -29,8 +32,10 @@
         <!-- <div class="dropdown" dropdown *ngIf="loggedIn"> -->
         <!-- <div class="dropdown" dropdown *ngIf="currentUser$ | async">-->
         <!-- <div class="dropdown" dropdown *ngIf="accountService.currentUser$ | async"> -->
-        <div class="dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user"> <!--user is alias used below with WELCOME-->
-            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.userName | titlecase}}</a> <span class="caret"></span>
+        <div class="dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user">
+            <!--user is alias used below with WELCOME-->
+            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.userName | titlecase}}</a> <span
+                class="caret"></span>
             <ul class="dropdown-menu" *dropdownMenu>
                 <li><a class="dropdown-item">Edit Profile</a></li>
                 <li class="divider dropdown-divider"></li>

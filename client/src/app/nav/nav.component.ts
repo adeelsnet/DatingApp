@@ -27,31 +27,32 @@ export class NavComponent implements OnInit {
     // this.currentUser$ = this.accountService.currentUser$;
   }
 
-  login(){
+  login() {
     this.accountService.login(this.model).subscribe(response => {
       // console.log(response);
       this.router.navigateByUrl('/members');
       // this.toastr.success(response.userName + ' Successfully Loggedin!');
       // this.loggedIn = true;
-    }, error => {
-      console.log(error);
-      this.toastr.error(error.error);
+      //   // , error => {
+      //   console.log(error);
+      //   this.toastr.error(error.error);
+      // });
     });
   }
 
-  logout(){
+  logout() {
     this.accountService.logout();
     // this.loggedIn = false;
     this.router.navigateByUrl('/');
   }
 
-/*  getCurrentUser(){
-    // as best practice NOT to subscribe to a Non HTTP request because it never finish, instead we have to use ASYNC
-    this.accountService.currentUser$.subscribe(user => {
-      // !! used with an object returns boolean
-       this.loggedIn = !!user;
-    }, error => {
-      console.log(error);
-    });
-  }*/
+  /*  getCurrentUser(){
+      // as best practice NOT to subscribe to a Non HTTP request because it never finish, instead we have to use ASYNC
+      this.accountService.currentUser$.subscribe(user => {
+        // !! used with an object returns boolean
+         this.loggedIn = !!user;
+      }, error => {
+        console.log(error);
+      });
+    }*/
 }
