@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { Member } from 'src/app/_models/member';
+import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -7,9 +11,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemberDetailComponent implements OnInit {
 
-  constructor() { }
+  member: Member;
+
+  /* we import and implements ngx-Gallery from https://www.npmjs.com/package/@kolkov/ngx-gallery */
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
+
+  constructor(private memberService: MembersService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.loadMember();
+
+    /* Implementation of ngx-Gallery from https://www.npmjs.com/package/@kolkov/ngx-gallery */
+    this.galleryOptions = [
+      {
+        width: '500px',
+        height: '500px',
+        imagePercent: 100,
+        thumbnailsColumns: 4,
+        imageAnimation: NgxGalleryAnimation.Slide,
+        preview: false
+      }
+    ];
   }
 
+  getImages(): NgxGalleryImage[] {
+
+    /* Implementation of ngx-Gallery from https://www.npmjs.com/package/@kolkov/ngx-gallery */
+    const imageUrls = [];
+    for (const photo of this.member.photos) {
+      imageUrls.push({
+        small: photo?.url,
+        medium: photo?.url,
+        big: photo?.url
+      });
+    }
+    return imageUrls;
+  }
+
+  loadMember() {
+    this.memberService.getMember(this.route.snapshot.paramMap.get('userName')).subscribe(member => {
+      this.member = member;
+      this.galleryImages = this.getImages();
+    });
+  }
 }
